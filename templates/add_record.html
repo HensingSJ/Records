@@ -1,0 +1,46 @@
+<form action="/add_record" method="post">
+    <label for="atleet">Atleet:</label><br>
+    <input type="text" id="atleet" name="atleet" required><br><br>
+
+    <label for="geslacht">Geslacht:</label><br>
+    <select id="geslacht" name="geslacht" required>
+        <option value="man">Man</option>
+        <option value="vrouw">Vrouw</option>
+    </select><br><br>
+
+    <label for="onderdeel">Onderdeel:</label><br>
+    <select id="onderdeel" name="onderdeel" required>
+        <option value="100m">100m</option>
+        <option value="200m">200m</option>
+        <option value="400m">400m</option>
+        <option value="800m">800m</option>
+        <option value="1500m">1500m</option>
+        <option value="ver">Verspringen</option>
+        <option value="hoog">Hoogspringen</option>
+        <option value="hhs">Hink-stap-sprong</option>
+        <option value="pols">Polsstokhoogspringen</option>
+        <option value="kogel">Kogelstoten</option>
+        <option value="discus">Discuswerpen</option>
+        <option value="kogelsl">Kogelslingeren</option>
+        <option value="4x100m">4x100m estafette</option>
+        <option value="4x400m">4x400m estafette</option>
+    </select><br><br>
+
+    <label for="categorie">Categorie:</label><br>
+    <select id="categorie" name="categorie" required>
+        <option value="Sen M">Sen M</option>
+        <option value="Sen V">Sen V</option>
+        <option value="U20 M">U20 M</option>
+        <option value="U20 V">U20 V</option>
+        <option value="U18 M">U18 M</option>
+        <option value="U18 V">U18 V</option>
+    </select><br><br>
+
+    <label for="prestatie">Prestatie:</label><br>
+    <input type="number" step="0.01" id="prestatie" name="prestatie" required><br><br>
+    
+    <label for="datum">Datum (DD-MM-YYYY):</label><br>
+    <input type="date" id="datum" name="datum" required><br><br>
+
+    <button type="submit">Voeg record toe</button>
+</form>

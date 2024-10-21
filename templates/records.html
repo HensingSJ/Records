@@ -1,0 +1,37 @@
+<table>
+    <thead>
+        <tr>
+            <th>Atleet</th>
+            <th>Onderdeel</th>
+            <th>Categorie</th>
+            <th>Prestatie</th>
+            <th>Datum</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.atleet }}</td>
+            <td>{{ record.onderdeel }}</td>
+            <td>{{ record.categorie }}</td>
+            <td>{{ record.prestatie }}</td>
+            <td>{{ record.datum.strftime('%Y-%m-%d') }}</td>
+            <td>
+                {% if record.status == 'in afwachting' %}
+                <form action="/approve_record/{{ record.id }}" method="post">
+                    <button type="submit">Approve</button>
+                </form>
+                <form action="/reject_record/{{ record.id }}" method="post">
+                    <button type="submit">Reject</button>
+                </form>
+                {% elif record.status == 'approved' %}
+                Approved
+                {% elif record.status == 'rejected' %}
+                Rejected
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

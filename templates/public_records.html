@@ -1,0 +1,68 @@
+<h1>Records in Afwachting</h1>
+
+<h2>Mannen</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Atleet</th>
+            <th>Onderdeel</th>
+            <th>Categorie</th>
+            <th>Prestatie</th>
+            <th>Datum</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records_man %}
+        <tr>
+            <td>{{ record.atleet }}</td>
+            <td>{{ record.onderdeel }}</td>
+            <td>{{ record.categorie }}</td>
+            <td>{{ record.prestatie }}</td>
+            <td>{{ record.datum }}</td>
+        </tr>
+        <li>
+            {{ record.atleet }} - {{ record.prestatie }} ({{ record.datum }})
+            <form action="{{ url_for('approve_record', record_id=record.id) }}" method="post" style="display: inline;">
+                <button type="submit">Approve</button>
+            </form>
+            <form action="{{ url_for('reject_record', record_id=record.id) }}" method="post" style="display: inline;">
+                <button type="submit">Reject</button>
+            </form>
+        </li>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Vrouwen</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Atleet</th>
+            <th>Onderdeel</th>
+            <th>Categorie</th>
+            <th>Prestatie</th>
+            <th>Datum</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records_vrouw %}
+        <tr>
+            <td>{{ record.atleet }}</td>
+            <td>{{ record.onderdeel }}</td>
+            <td>{{ record.categorie }}</td>
+            <td>{{ record.prestatie }}</td>
+            <td>{{ record.datum }}</td>
+            <li>
+                {{ record.atleet }} - {{ record.prestatie }} ({{ record.datum }})
+                <form action="{{ url_for('approve_record', record_id=record.id) }}" method="post" style="display: inline;">
+                    <button type="submit">Approve</button>
+                </form>
+                <form action="{{ url_for('reject_record', record_id=record.id) }}" method="post" style="display: inline;">
+                    <button type="submit">Reject</button>
+                </form>
+            </li>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table><br>
+<a href="/records">Terug naar Records</a>

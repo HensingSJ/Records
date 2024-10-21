@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goedgekeurde Records</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Goedgekeurde Records</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Atleet</th>
+                <th>Onderdeel</th>
+                <th>Categorie</th>
+                <th>Prestatie</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.atleet }}</td>
+                <td>{{ record.onderdeel }}</td>
+                <td>{{ record.categorie }}</td>
+                <td>{{ record.prestatie }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/records">Terug naar Records</a>
+</body>
+</html>
