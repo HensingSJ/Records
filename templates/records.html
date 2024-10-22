@@ -1,37 +1,55 @@
-<table>
-    <thead>
-        <tr>
-            <th>Atleet</th>
-            <th>Onderdeel</th>
-            <th>Categorie</th>
-            <th>Prestatie</th>
-            <th>Datum</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for record in records %}
-        <tr>
-            <td>{{ record.atleet }}</td>
-            <td>{{ record.onderdeel }}</td>
-            <td>{{ record.categorie }}</td>
-            <td>{{ record.prestatie }}</td>
-            <td>{{ record.datum.strftime('%Y-%m-%d') }}</td>
-            <td>
-                {% if record.status == 'in afwachting' %}
-                <form action="/approve_record/{{ record.id }}" method="post">
-                    <button type="submit">Approve</button>
-                </form>
-                <form action="/reject_record/{{ record.id }}" method="post">
-                    <button type="submit">Reject</button>
-                </form>
-                {% elif record.status == 'approved' %}
-                Approved
-                {% elif record.status == 'rejected' %}
-                Rejected
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Records Overzicht</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Records Overzicht</h1>
+    </div>
+    
+    <div class="container">
+        <table class="records-table">
+            <thead>
+                <tr>
+                    <th>Atleet</th>
+                    <th>Onderdeel</th>
+                    <th>Categorie</th>
+                    <th>Prestatie</th>
+                    <th>Datum</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.atleet }}</td>
+                    <td>{{ record.onderdeel }}</td>
+                    <td>{{ record.categorie }}</td>
+                    <td>{{ record.prestatie }}</td>
+                    <td>{{ record.datum.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        {% if record.status == 'in afwachting' %}
+                        <form action="/approve_record/{{ record.id }}" method="post">
+                            <button class="approve-button">Approve</button>
+                        </form>
+                        <form action="/reject_record/{{ record.id }}" method="post">
+                            <button class="reject-button">Reject</button>
+                        </form>
+                        {% elif record.status == 'approved' %}
+                        Approved
+                        {% elif record.status == 'rejected' %}
+                        Rejected
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

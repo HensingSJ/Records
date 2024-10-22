@@ -1,16 +1,58 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from datetime import date
+from sqlalchemy import func
 import csv
 import os
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash 
 
 app = Flask(__name__)
 
 # Configuratie voor de SQLite-database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///records.db'
 app.config['UPLOAD_FOLDER'] = './uploads'
+app.config['SECRET_KEY'] = os.urandom(24)  # Generate a random secret key
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
+# User model for login
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user:
+            print(f"User {username} found, checking password")
+        else:
+            print(f"User {username} not found")
+            
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('records_home'))
+        else:
+            flash('Login failed. Check your username and password.')
+            return redirect(url_for('login'))
+    return render_template('login.html')
+
+# Route for logging out
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 # Het Record-model, aangepast met 'onderdeel' en 'categorie'
 class Record(db.Model):
@@ -37,6 +79,7 @@ def records_home():
 
 # Route voor goedkeuren van een record
 @app.route('/approve_record/<int:record_id>', methods=['POST'])
+@login_required
 def approve_record(record_id):
     record = Record.query.get_or_404(record_id)
     record.status = 'approved'
@@ -45,6 +88,7 @@ def approve_record(record_id):
 
 # Route voor afwijzen van een record
 @app.route('/reject_record/<int:record_id>', methods=['POST'])
+@login_required
 def reject_record(record_id):
     record = Record.query.get_or_404(record_id)
     record.status = 'rejected'
@@ -134,6 +178,26 @@ def show_public_records():
 #def records_home():
  #   return render_template('records_home.html')
 
+# New route for the overview page
+@app.route('/overview', methods=['GET'])
+def overview():
+    onderdelen = ['100m', '200m', '400m', '800m', '1500m', 'ver', 'hoog', 'hhs', 'pols', 
+                  'kogel', 'discus', 'kogelsl', '4x100m', '4x400m']
+
+    overview_data = {}
+    for onderdeel in onderdelen:
+        # Fetch the best approved record for each event
+        best_record = Record.query.filter_by(onderdeel=onderdeel, status='approved').order_by(Record.prestatie).first()
+
+        # Fetch all pending records for the event
+        pending_records = Record.query.filter_by(onderdeel=onderdeel, status='in afwachting').all()
+
+        overview_data[onderdeel] = {
+            'best_record': best_record,
+            'pending_records': pending_records
+        }
+
+    return render_template('overview.html', overview_data=overview_data)
 
 # Start de Flask applicatie
 if __name__ == '__main__':

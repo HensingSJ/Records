@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overzicht per Onderdeel</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Records Overzicht per Onderdeel</h1>
+    </div>
+    
+    <div class="container">
+        {% for onderdeel, data in overview_data.items() %}
+        <h2>{{ onderdeel }}</h2>
+
+        <!-- Display best approved record -->
+        {% if data.best_record %}
+        <table class="records-table">
+            <thead>
+                <tr>
+                    <th>Atleet</th>
+                    <th>Onderdeel</th>
+                    <th>Categorie</th>
+                    <th>Prestatie</th>
+                    <th>Datum</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ data.best_record.atleet }}</td>
+                    <td>{{ data.best_record.onderdeel }}</td>
+                    <td>{{ data.best_record.categorie }}</td>
+                    <td>{{ data.best_record.prestatie }}</td>
+                    <td>{{ data.best_record.datum.strftime('%Y-%m-%d') }}</td>
+                    <td>Approved</td>
+                </tr>
+            </tbody>
+        </table>
+        {% else %}
+        <p>Geen goedgekeurde records gevonden voor {{ onderdeel }}.</p>
+        {% endif %}
+
+        <!-- Display pending records -->
+        <h3>Records in Afwachting</h3>
+        {% if data.pending_records %}
+        <table class="records-table">
+            <thead>
+                <tr>
+                    <th>Atleet</th>
+                    <th>Onderdeel</th>
+                    <th>Categorie</th>
+                    <th>Prestatie</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in data.pending_records %}
+                <tr style="background-color: yellow;">
+                    <td>{{ record.atleet }}</td>
+                    <td>{{ record.onderdeel }}</td>
+                    <td>{{ record.categorie }}</td>
+                    <td>{{ record.prestatie }}</td>
+                    <td>{{ record.datum.strftime('%Y-%m-%d') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Geen records in afwachting voor {{ onderdeel }}.</p>
+        {% endif %}
+        <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>
