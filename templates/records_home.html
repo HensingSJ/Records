@@ -16,10 +16,22 @@
             <li><a href="/add_record">Nieuw Record Toevoegen</a></li>
             <li><a href="/upload-csv">Records Uploaden via CSV</a></li>
             <li><a href="/records/publiek">Records in Afwachting Bekijken</a></li>
-            <li><a href="/approved_records">Goedgekeurde records</a></li>
-            <li><a href="/rejected_records">Afgekeurde records</a></li>
-            <li><a href="/overview">Totaal overzicht</a></li>
+            <li><a href="/approved_records">Goedgekeurde Records</a></li>
+            <li><a href="/rejected_records">Afgekeurde Records</a></li>
+            <li><a href="/overview">Totaal Overzicht</a></li>
         </ul>
+
+<!--         {% for record in records %}
+            <div class="record-item">
+                <p>{{ record.description }}</p>
+                {% if current_user.is_authenticated %}
+                    <a href="/approve_record/{{ record.id }}" class="approve-button">Approve</a>
+                    <a href="/reject_record/{{ record.id }}" class="reject-button">Reject</a>
+                {% else %}
+                    <p>Please log in to approve or reject records.</p>
+                {% endif %}
+            </div>
+        {% endfor %} -->
     </div>
 </body>
-</html
+</html>

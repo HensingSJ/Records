@@ -1,68 +1,81 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Records in Afwachting</title>
+    <link rel="stylesheet" href="/static/styles.css">
 <h1>Records in Afwachting</h1>
 
-<h2>Mannen</h2>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Atleet</th>
-            <th>Onderdeel</th>
-            <th>Categorie</th>
-            <th>Prestatie</th>
-            <th>Datum</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for record in records_man %}
-        <tr>
-            <td>{{ record.atleet }}</td>
-            <td>{{ record.onderdeel }}</td>
-            <td>{{ record.categorie }}</td>
-            <td>{{ record.prestatie }}</td>
-            <td>{{ record.datum }}</td>
-        </tr>
-        <li>
-            {{ record.atleet }} - {{ record.prestatie }} ({{ record.datum }})
-            <form action="{{ url_for('approve_record', record_id=record.id) }}" method="post" style="display: inline;">
-                <button type="submit">Approve</button>
-            </form>
-            <form action="{{ url_for('reject_record', record_id=record.id) }}" method="post" style="display: inline;">
-                <button type="submit">Reject</button>
-            </form>
-        </li>
-        {% endfor %}
-    </tbody>
-</table>
+<section>
+    <h2>Mannen</h2>
+    <table class="records-table">
+        <thead>
+            <tr>
+                <th>Atleet</th>
+                <th>Onderdeel</th>
+                <th>Categorie</th>
+                <th>Prestatie</th>
+                <th>Datum</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records_man %}
+            <tr>
+                <td>{{ record.atleet }}</td>
+                <td>{{ record.onderdeel }}</td>
+                <td>{{ record.categorie }}</td>
+                <td>{{ record.prestatie }}</td>
+                <td>{{ record.datum }}</td>
+                <td>
+                    <form action="{{ url_for('approve_record', record_id=record.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="approve-button">Approve</button>
+                    </form>
+                    <form action="{{ url_for('reject_record', record_id=record.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="reject-button">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
 
-<h2>Vrouwen</h2>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Atleet</th>
-            <th>Onderdeel</th>
-            <th>Categorie</th>
-            <th>Prestatie</th>
-            <th>Datum</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for record in records_vrouw %}
-        <tr>
-            <td>{{ record.atleet }}</td>
-            <td>{{ record.onderdeel }}</td>
-            <td>{{ record.categorie }}</td>
-            <td>{{ record.prestatie }}</td>
-            <td>{{ record.datum }}</td>
-            <li>
-                {{ record.atleet }} - {{ record.prestatie }} ({{ record.datum }})
-                <form action="{{ url_for('approve_record', record_id=record.id) }}" method="post" style="display: inline;">
-                    <button type="submit">Approve</button>
-                </form>
-                <form action="{{ url_for('reject_record', record_id=record.id) }}" method="post" style="display: inline;">
-                    <button type="submit">Reject</button>
-                </form>
-            </li>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table><br>
-<a href="/records">Terug naar Records</a>
+<section>
+    <h2>Vrouwen</h2>
+    <table class="records-table">
+        <thead>
+            <tr>
+                <th>Atleet</th>
+                <th>Onderdeel</th>
+                <th>Categorie</th>
+                <th>Prestatie</th>
+                <th>Datum</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records_vrouw %}
+            <tr>
+                <td>{{ record.atleet }}</td>
+                <td>{{ record.onderdeel }}</td>
+                <td>{{ record.categorie }}</td>
+                <td>{{ record.prestatie }}</td>
+                <td>{{ record.datum }}</td>
+                <td>
+                    <form action="{{ url_for('approve_record', record_id=record.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="approve-button">Approve</button>
+                    </form>
+                    <form action="{{ url_for('reject_record', record_id=record.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="reject-button">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<a href="/records" class="button">Terug naar Records</a>
+

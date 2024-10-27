@@ -29,6 +29,7 @@
                 </tr>
             </thead>
             <tbody>
+                {% for record in records %}
                 <tr>
                     <td>{{ data.best_record.atleet }}</td>
                     <td>{{ data.best_record.onderdeel }}</td>
@@ -37,6 +38,7 @@
                     <td>{{ data.best_record.datum.strftime('%Y-%m-%d') }}</td>
                     <td>Approved</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
         {% else %}
@@ -75,4 +77,7 @@
         {% endfor %}
     </div>
 </body>
+
+<a href="/records" class="button">Terug naar Records</a>
+
 </html>

@@ -97,6 +97,7 @@ def reject_record(record_id):
 
 # Route voor het toevoegen van een record (handmatige invoer)
 @app.route('/add_record', methods=['GET', 'POST'])
+@login_required
 def add_record():
     if request.method == 'POST':
         atleet = request.form['atleet']

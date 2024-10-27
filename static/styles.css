@@ -116,3 +116,100 @@ body {
 tr[style="background-color: yellow;"] {
     background-color: yellow;
 }
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+header nav span {
+    font-weight: bold;
+}
+
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header navigation */
+header nav {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+header nav span {
+    margin-right: auto;
+}
+
+/* Main container for content */
+.content-container {
+    display: flex;
+    padding: 20px;
+}
+
+/* Menu section */
+.menu-section {
+    flex: 1;
+}
+
+.menu-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.menu-section li {
+    margin: 10px 0;
+}
+
+.menu-section a {
+    text-decoration: none;
+    color: #333;
+}
+
+.menu-section a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Image section */
+ .image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
