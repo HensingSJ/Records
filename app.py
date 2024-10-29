@@ -63,6 +63,7 @@ class Record(db.Model):
     categorie = db.Column(db.String(50), nullable=False)   # Categorie zoals 'Senioren'
     prestatie = db.Column(db.Float, nullable=False)
     datum = db.Column(db.Date, nullable=False)
+    comments = db.Column(db.Text, nullable=True)
     status = db.Column(db.String(20), default='in afwachting')  # New status field
     approved_by = db.Column(db.String(100), nullable=True)  
 
@@ -83,6 +84,7 @@ def records_home():
 def approve_record(record_id):
     record = Record.query.get_or_404(record_id)
     record.status = 'approved'
+    record.approved_by = current_user.username  # Set to the current user's username
     db.session.commit()
     return redirect('/records')
 
@@ -92,8 +94,21 @@ def approve_record(record_id):
 def reject_record(record_id):
     record = Record.query.get_or_404(record_id)
     record.status = 'rejected'
+    record.approved_by = current_user.username  # Track who rejected the record
     db.session.commit()
     return redirect('/records')
+
+# Route voor comment plaatsen bij record
+@app.route('/review_record/<int:record_id>', methods=['POST'])
+@login_required
+def review_record(record_id):
+    record = Record.query.get_or_404(record_id)
+    record.status = request.form['status']
+    record.comments = request.form['comments']
+    record.approved_by = current_user.username  # Track who rejected the record
+    db.session.commit()
+    flash('Record review updated.')
+    return redirect(url_for('show_pending_records'))
 
 # Route voor het toevoegen van een record (handmatige invoer)
 @app.route('/add_record', methods=['GET', 'POST'])
@@ -160,8 +175,8 @@ def upload_csv():
     return render_template('upload_csv.html')
 
 # Route voor publieke weergave van records die in afwachting zijn
-@app.route('/records/publiek')
-def show_public_records():
+@app.route('/pending_records')
+def show_pending_records():
     pending_records = Record.query.filter_by(status='in afwachting').all()
 
     # Onderverdeel de records op basis van geslacht
@@ -172,7 +187,7 @@ def show_public_records():
     records_man_sorted = sorted(records_man, key=lambda x: x.onderdeel)
     records_vrouw_sorted = sorted(records_vrouw, key=lambda x: x.onderdeel)
 
-    return render_template('public_records.html', records_man=records_man_sorted, records_vrouw=records_vrouw_sorted)
+    return render_template('pending_records.html', records_man=records_man_sorted, records_vrouw=records_vrouw_sorted)
 
 # Hoofdpagina voor records beheer
 #@app.route('/records')
@@ -198,6 +213,34 @@ def overview():
             'pending_records': pending_records
         }
 
+    return render_template('overview.html', overview_data=overview_data)
+
+# Overview om beste prestatie op te slaan. Moet nog wel worden gesplitst voor ascending en descending prestaties. Nu is het alleen voor ascending prestaties.
+@app.route('/best_records')
+def best_records():
+    # Define all onderdelen (events) here
+    onderdelen = ['100m', '200m', '400m', '800m', '1500m', 'ver', 'hoog', 'hhs', 'pols', 
+                  'kogel', 'discus', 'kogelsl', '4x100m', '4x400m']
+    
+    overview_data = {}
+    
+    for onderdeel in onderdelen:
+        # Get the best approved record for the current onderdeel
+        best_record = (Record.query
+                       .filter_by(onderdeel=onderdeel, status='approved')
+                       .order_by(Record.prestatie.desc())  # Assuming a higher prestatie is better
+                       .first())
+        
+        # Get pending records for the current onderdeel
+        pending_records = Record.query.filter_by(onderdeel=onderdeel, status='in afwachting').all()
+        
+        # Add data to overview_data
+        overview_data[onderdeel] = {
+            'best_record': best_record,
+            'pending_records': pending_records
+        }
+    
+    # Pass the data to the template
     return render_template('overview.html', overview_data=overview_data)
 
 # Start de Flask applicatie

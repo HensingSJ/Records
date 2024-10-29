@@ -15,7 +15,7 @@
         <ul class="nav">
             <li><a href="/add_record">Nieuw Record Toevoegen</a></li>
             <li><a href="/upload-csv">Records Uploaden via CSV</a></li>
-            <li><a href="/records/publiek">Records in Afwachting Bekijken</a></li>
+            <li><a href="/pending_records">Records in Afwachting</a></li>
             <li><a href="/approved_records">Goedgekeurde Records</a></li>
             <li><a href="/rejected_records">Afgekeurde Records</a></li>
             <li><a href="/overview">Totaal Overzicht</a></li>
@@ -33,5 +33,10 @@
             </div>
         {% endfor %} -->
     </div>
+
+    <section class="image-section">
+        <img src="{{ url_for('static', filename='Omnisport.jpg') }}" alt="Atletiekbaan" />
+    </section>
+
 </body>
 </html>

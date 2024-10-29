@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Records in Afwachting</title>
     <link rel="stylesheet" href="/static/styles.css">
-<h1>Records in Afwachting</h1>
+<h2>Records in Afwachting</h2>
 
 <section>
     <h2>Mannen</h2>
@@ -18,6 +18,8 @@
                 <th>Prestatie</th>
                 <th>Datum</th>
                 <th>Acties</th>
+                <th>Approver</th>
+                <th>Opmerkingen</th>
             </tr>
         </thead>
         <tbody>
@@ -28,14 +30,31 @@
                 <td>{{ record.categorie }}</td>
                 <td>{{ record.prestatie }}</td>
                 <td>{{ record.datum }}</td>
-                <td>
+<!--                 <td>
                     <form action="{{ url_for('approve_record', record_id=record.id) }}" method="post" style="display: inline;">
                         <button type="submit" class="approve-button">Approve</button>
                     </form>
                     <form action="{{ url_for('reject_record', record_id=record.id) }}" method="post" style="display: inline;">
                         <button type="submit" class="reject-button">Reject</button>
                     </form>
+                </td> -->
+                <td>
+                    <form action="{{ url_for('review_record', record_id=record.id) }}" method="post">
+                        <label for="status">Status:</label>
+                        <select name="status" id="status">
+                            <option value="approved">Approve</option>
+                            <option value="rejected">Reject</option>
+                            <option value="in afwachting">More Information</option>
+                        </select>
+                        
+                        <label for="comments">Comments:</label>
+                        <textarea name="comments" id="comments" rows="4"></textarea>
+                        
+                        <button type="submit" class="approve-button">Submit</button>
+                    </form>
                 </td>
+                <td>{{ record.approved_by }}</td>
+                <td>{{ record.comments }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -53,6 +72,7 @@
                 <th>Prestatie</th>
                 <th>Datum</th>
                 <th>Acties</th>
+                <th>Opmerkingen</th>
             </tr>
         </thead>
         <tbody>
@@ -71,6 +91,7 @@
                         <button type="submit" class="reject-button">Reject</button>
                     </form>
                 </td>
+                <td>{{ record.opmerkingen or 'Geen opmerkingen' }}</td>
             </tr>
             {% endfor %}
         </tbody>

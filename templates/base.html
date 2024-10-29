@@ -27,7 +27,7 @@
                 <li><a href="{{ url_for('records_home') }}">Home</a></li>
                 <li><a href="{{ url_for('add_record') }}">Nieuw Record Toevoegen</a></li>
                 <li><a href="{{ url_for('upload_csv') }}">Records Uploaden via CSV</a></li>
-                <li><a href="{{ url_for('show_public_records') }}">Records in Afwachting Bekijken</a></li>
+                <li><a href="{{ url_for('show_pending_records') }}">Records in Afwachting</a></li>
                 <li><a href="{{ url_for('approved_records') }}">Goedgekeurde Records</a></li>
                 <li><a href="{{ url_for('rejected_records') }}">Afgekeurde Records</a></li>
             </ul>
@@ -35,7 +35,7 @@
         {% endblock %}
         
         <section class="image-section">
-            <img src="{{ url_for('static', filename='athletics_track.jpg') }}" alt="Atletiekbaan" />
+            <img src="{{ url_for('static', filename='Omnisport.jpg') }}" alt="Atletiekbaan" />
         </section>
         {% block content %}{% endblock %}
     </main>

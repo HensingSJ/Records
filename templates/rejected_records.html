@@ -15,6 +15,9 @@
                 <th>Onderdeel</th>
                 <th>Categorie</th>
                 <th>Prestatie</th>
+                <th>Datum</th>
+                <th>Approver</th>
+                <th>Opmerkingen</th
             </tr>
         </thead>
         <tbody>
@@ -24,6 +27,9 @@
                 <td>{{ record.onderdeel }}</td>
                 <td>{{ record.categorie }}</td>
                 <td>{{ record.prestatie }}</td>
+                <td>{{ record.datum }}</td>
+                <td>{{ record.approved_by }}</td>
+                <td>{{ record.comments or 'Geen opmerkingen'}}</td>
             </tr>
             {% endfor %}
         </tbody>

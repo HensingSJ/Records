@@ -25,20 +25,16 @@
                     <th>Categorie</th>
                     <th>Prestatie</th>
                     <th>Datum</th>
-                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                {% for record in records %}
                 <tr>
                     <td>{{ data.best_record.atleet }}</td>
                     <td>{{ data.best_record.onderdeel }}</td>
                     <td>{{ data.best_record.categorie }}</td>
                     <td>{{ data.best_record.prestatie }}</td>
                     <td>{{ data.best_record.datum.strftime('%Y-%m-%d') }}</td>
-                    <td>Approved</td>
                 </tr>
-                {% endfor %}
             </tbody>
         </table>
         {% else %}
@@ -76,8 +72,8 @@
         <hr>
         {% endfor %}
     </div>
+    
+
+    <a href="/records" class="button">Terug naar Records</a>
 </body>
-
-<a href="/records" class="button">Terug naar Records</a>
-
 </html>
